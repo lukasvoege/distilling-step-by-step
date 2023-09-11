@@ -30,6 +30,7 @@ def compute_equation_acc(preds, labels):
 def eval_equation(equation):
     try:
         answer = eval(equation)
+        answer = float(answer)
     except:
         answer = np.nan
 
