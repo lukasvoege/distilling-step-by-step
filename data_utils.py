@@ -21,7 +21,7 @@ import numpy as np
 from datasets import Dataset, DatasetDict, load_dataset
 
 
-DATASET_ROOT = '../datasets'
+DATASET_ROOT = 'datasets'
 
 
 class DatasetLoader(object):
@@ -94,19 +94,18 @@ class DatasetLoader(object):
 
         return rationales, labels
 
-
-    def load_gpt_preds(self, split):
+    
+    def load_gpt35_preds(self, split, prompt_mix_id):
         labels = list()
         rationales = list()
         
-        with open(f'{self.data_root}/gpt-neox/{self.dataset_name}/{split}.json') as f:
-            outputs = json.load(f)
+        with open(f'{self.data_root}/{self.dataset_name}/gpt_35_turbo/{prompt_mix_id}/{split}_CoT.json') as f:
+            for line in f:
+                output = json.loads(line)
+                rationale, label = output['explanation'], output['label']
 
-        for output in outputs:
-            rationale, label = self._parse_gpt_output(output)
-
-            rationales.append(rationale)
-            labels.append(label)
+                rationales.append(rationale)
+                labels.append(label)
 
         return rationales, labels
 
