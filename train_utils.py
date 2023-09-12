@@ -87,7 +87,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
     else:
         raise ValueError
 
-    earlyStopping = EarlyStoppingCallback(early_stopping_patience=5, early_stopping_threshold=0.5)
+    earlyStopping = EarlyStoppingCallback(early_stopping_patience=5, early_stopping_threshold=0.025)
 
     trainer_kwargs = {
         'alpha': args.alpha,
