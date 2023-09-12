@@ -21,6 +21,7 @@ from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer
 from transformers import T5ForConditionalGeneration
 from transformers import DataCollatorForSeq2Seq
 from transformers.trainer_utils import set_seed
+from transformers.callbacks import EarlyStoppingCallback
 
 from model_utils import TaskPrefixDataCollator, TaskPrefixTrainer
 
@@ -60,7 +61,9 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         eval_steps=args.eval_steps,
         save_strategy='steps',
         save_steps=args.eval_steps,
-        save_total_limit=1,
+        save_total_limit=5,
+        load_best_model_at_end=True,
+        metric_for_best_model='accuracy',
         logging_dir=logging_dir,
         logging_strategy=logging_strategy,
         logging_steps=args.eval_steps,
@@ -84,6 +87,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
     else:
         raise ValueError
 
+    earlyStopping = EarlyStoppingCallback(early_stopping_patience=5, early_stopping_threshold=0.5)
 
     trainer_kwargs = {
         'alpha': args.alpha,
@@ -95,6 +99,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         'data_collator': data_collator,
         'tokenizer': tokenizer,
         'compute_metrics': compute_metrics,
+        'callbacks': [earlyStopping],
     }
     
 
