@@ -63,7 +63,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         save_steps=args.eval_steps,
         save_total_limit=5,
         load_best_model_at_end=True,
-        metric_for_best_model='accuracy',
+        metric_for_best_model='test_accuracy',
         logging_dir=logging_dir,
         logging_strategy=logging_strategy,
         logging_steps=args.eval_steps,
@@ -113,9 +113,12 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         raise ValueError
     
 
-    trainer.train()
+    train_results = trainer.train()
     # evaluate the trained model on the final valid split and save the results to a file
     os.makedirs(result_dir, exist_ok=True)
+
+    with open(f'{result_dir}/train_results.txt', 'w') as f:
+        f.write(str(train_results))
 
     print("Evaluating the final model on the eval split...")
     eval_results = trainer.evaluate(eval_dataset=tokenized_datasets["valid"])
