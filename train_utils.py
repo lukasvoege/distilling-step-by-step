@@ -35,6 +35,9 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
 
     model = T5ForConditionalGeneration.from_pretrained(args.from_pretrained)
 
+    if args.llm == "palm":
+        args.prompt_mix = 0
+
     if args.parallelize:
         model.parallelize()
 
