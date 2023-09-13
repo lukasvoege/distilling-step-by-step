@@ -47,7 +47,7 @@ def compute_metrics_text(tokenizer):
 
         acc = np.mean(np.array(decoded_preds) == np.array(decoded_labels))
 
-        return {'accuracy': acc}
+        return {"accuracy": acc}
 
     return compute_metrics
 
@@ -62,10 +62,9 @@ def compute_metrics_text_aux(tokenizer):
 
         acc = np.mean(np.array(decoded_preds) == np.array(decoded_labels))
 
-        return {'accuracy': acc}
+        return {"accuracy": acc}
 
     return compute_metrics
-
 
 
 def compute_metrics_equation(tokenizer):
@@ -77,17 +76,17 @@ def compute_metrics_equation(tokenizer):
         decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
 
         preds = list()
-        for pred in decoded_preds:    
+        for pred in decoded_preds:
             preds.append(eval_equation(pred))
 
         labels = list()
-        for label in decoded_labels:    
+        for label in decoded_labels:
             labels.append(eval_equation(label))
 
         acc = np.mean(np.array(preds) == np.array(labels))
 
-        return {'accuracy': acc}
-    
+        return {"accuracy": acc}
+
     return compute_metrics
 
 
@@ -100,15 +99,15 @@ def compute_metrics_equation_aux(tokenizer):
         decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
 
         preds = list()
-        for pred in decoded_preds:    
+        for pred in decoded_preds:
             preds.append(eval_equation(pred))
 
         labels = list()
-        for label in decoded_labels:    
+        for label in decoded_labels:
             labels.append(eval_equation(label))
 
         acc = np.mean(np.array(preds) == np.array(labels))
 
-        return {'accuracy': acc}
-    
+        return {"accuracy": acc}
+
     return compute_metrics
