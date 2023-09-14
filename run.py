@@ -116,7 +116,7 @@ def run(args):
         else:
             raise ValueError
 
-        if valid_llm_labels:
+        if args.llm is not None:
             ## in case llm predictions are not available for all examples, crop the datasets
             if len(valid_llm_labels) < len(datasets["valid"]):
                 datasets["valid"] = datasets["valid"].select(range(len(valid_llm_labels)))
