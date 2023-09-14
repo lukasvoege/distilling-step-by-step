@@ -116,12 +116,13 @@ def run(args):
         else:
             raise ValueError
 
-        ## in case llm predictions are not available for all examples, crop the datasets
-        if len(valid_llm_labels) < len(datasets["valid"]):
-            datasets["valid"] = datasets["valid"].select(range(len(valid_llm_labels)))
+        if valid_llm_labels:
+            ## in case llm predictions are not available for all examples, crop the datasets
+            if len(valid_llm_labels) < len(datasets["valid"]):
+                datasets["valid"] = datasets["valid"].select(range(len(valid_llm_labels)))
 
-        datasets["valid"] = datasets["valid"].add_column("llm_label", valid_llm_labels)
-        datasets["valid"] = datasets["valid"].add_column("llm_rationale", valid_llm_rationales)
+            datasets["valid"] = datasets["valid"].add_column("llm_label", valid_llm_labels)
+            datasets["valid"] = datasets["valid"].add_column("llm_rationale", valid_llm_rationales)
     else:
         train_valid_datasets = datasets["train"].train_test_split(test_size=0.1, seed=0)
 
