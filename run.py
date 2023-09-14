@@ -62,6 +62,9 @@ def run(args):
     else:
         datasets = dataset_loader.load_from_json()
 
+    if args.model_type == "standard" and args.label_type == "gt":
+        args.llm = None
+
     if args.llm is None:
         pass
     elif args.llm == "palm":
