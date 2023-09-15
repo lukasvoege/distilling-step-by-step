@@ -119,6 +119,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         raise ValueError
 
     train_results = trainer.train()
+    best_checkpoint = trainer.state.best_model_checkpoint.split(os.path.sep)[-1]
     # evaluate the trained model on the final valid split and save the results to a file
     os.makedirs(result_dir, exist_ok=True)
 
@@ -136,4 +137,12 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         f.write(str(test_results))
 
     print(f"Saved the evaluation results to {result_dir}")
+
+    print(f"Removing every checkpoint except the best one ({best_checkpoint})")
+    for checkpoint in os.listdir(output_dir):
+        if checkpoint != best_checkpoint:
+            checkpoint_path = os.path.join(output_dir, checkpoint)
+            if os.path.isdir(checkpoint_path):
+                shutil.rmtree(checkpoint_path)
+
     print("### Done ###")
