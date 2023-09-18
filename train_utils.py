@@ -64,7 +64,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         eval_steps=args.eval_steps,
         save_strategy="steps",
         save_steps=args.eval_steps,
-        save_total_limit=5,
+        save_total_limit=2,
         load_best_model_at_end=True,
         metric_for_best_model="test_accuracy",
         logging_dir=logging_dir,
