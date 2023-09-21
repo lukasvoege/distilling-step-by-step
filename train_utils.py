@@ -138,11 +138,16 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
 
     print(f"Saved the evaluation results to {result_dir}")
 
-    print(f"Removing every checkpoint except the best one ({best_checkpoint})")
+    print(f"Removing checkpoints...")
     for checkpoint in os.listdir(output_dir):
         if checkpoint != best_checkpoint:
             checkpoint_path = os.path.join(output_dir, checkpoint)
             if os.path.isdir(checkpoint_path):
                 shutil.rmtree(checkpoint_path)
+        else:
+            ## move the best checkpoint to /net/voegeluk/
+            print(f"Moving the best checkpoint ({best_checkpoint}) to /net/...)")
+            checkpoint_path = os.path.join(output_dir, checkpoint)
+            shutil.move(checkpoint_path, f"/net/voegeluk/{checkpoint_path}")
 
     print("### Done ###")
