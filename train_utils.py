@@ -144,10 +144,9 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
             checkpoint_path = os.path.join(output_dir, checkpoint)
             if os.path.isdir(checkpoint_path):
                 shutil.rmtree(checkpoint_path)
-        else:
-            ## move the best checkpoint to /net/voegeluk/
-            print(f"Moving the best checkpoint ({best_checkpoint}) to /net/...)")
-            checkpoint_path = os.path.join(output_dir, checkpoint)
-            shutil.move(checkpoint_path, f"/net/voegeluk/{checkpoint_path}")
+        
+        ## move the best checkpoint to /net/voegeluk/
+        print(f"Moving the best checkpoint ({best_checkpoint}) to /net/...)")
+        shutil.move("ckpts", f"/net/voegeluk/")
 
     print("### Done ###")
