@@ -148,6 +148,10 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
             ## move the best checkpoint to /net/voegeluk/
             print(f"Moving the best checkpoint ({best_checkpoint}) to /net/...)")
             checkpoint_path = os.path.join(output_dir, checkpoint)
-            shutil.move(checkpoint_path, f"/net/voegeluk/{checkpoint_path}")
+            try:
+                shutil.move(checkpoint_path, f"/net/voegeluk/{checkpoint_path}")
+            except:
+                print("Failed to move the best checkpoint to /net/voegeluk/.")
+                print("The best checkpoint is still in the ckpt directory.")
 
     print("### Done ###")
