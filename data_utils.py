@@ -113,6 +113,12 @@ class DatasetLoader(object):
                 output = json.loads(line)
                 rationale, label = output["explanation"], output["label"]
 
+                # impute missing labels with "neutral" and rationales with " "
+                if label == None:
+                    label = "neutral"
+                if rationale == None:
+                    rationale = " "
+
                 rationales.append(rationale)
                 labels.append(label)
 
