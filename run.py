@@ -246,6 +246,7 @@ if __name__ == "__main__":
     parser.add_argument("--parallelize", action="store_true")
     parser.add_argument("--model_type", type=str, default="task_prefix")
     parser.add_argument("--bf16", action="store_true")
+    parser.add_argument("--tf32", action="store_true")    ###### TEST!!
     parser.add_argument("--no_log", action="store_true")
     parser.add_argument("--output_rationale", action="store_true")
 

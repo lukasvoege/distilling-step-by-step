@@ -79,6 +79,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
         seed=run,
         local_rank=args.local_rank,
         bf16=args.bf16,
+        tf32=args.tf32,     ###### TEST!!
         generation_max_length=args.gen_max_len,
         prediction_loss_only=False,
     )
