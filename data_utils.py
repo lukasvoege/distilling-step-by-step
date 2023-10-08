@@ -115,7 +115,10 @@ class DatasetLoader(object):
 
                 # impute missing labels with "neutral" and rationales with " "
                 if label == None:
-                    label = "neutral"
+                    if self.dataset_name in ["anli1", "esnli"]:
+                        label = "neutral"
+                    elif self.dataset_name == "cqa":
+                        label = " "
                 if rationale == None:
                     rationale = " "
 
