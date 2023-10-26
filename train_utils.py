@@ -141,7 +141,7 @@ def train_and_evaluate(args, run, tokenizer, tokenized_datasets, compute_metrics
 
     print(f"Removing checkpoints...")
     for checkpoint in os.listdir(output_dir):
-        if checkpoint != best_checkpoint:
+        if checkpoint != best_checkpoint or args.no_save:
             checkpoint_path = os.path.join(output_dir, checkpoint)
             if os.path.isdir(checkpoint_path):
                 shutil.rmtree(checkpoint_path)
